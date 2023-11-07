@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Portfolio" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="shortcut icon" href="#">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/fa62c117c7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="styles.css" />
+    <title>M&E Controls : Time Logs : Landing Page</title>
+
+
+    <script type="module">
+
+      console.log("HERE!!");
+
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";
+      import { getDatabase } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js"
+
+      import { ref, set } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js"
+      import { child, get } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js"
+      import { onValue } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js"
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCxcaeGWc3HfkRpAriC1C5k29tjVBJN820",
+        authDomain: "arastelemtry.firebaseapp.com",
+        databaseURL: "https://arastelemtry-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "arastelemtry",
+        storageBucket: "arastelemtry.appspot.com",
+        messagingSenderId: "810724846084",
+        appId: "1:810724846084:web:9825605b1b6b2e28d42351",
+        measurementId: "G-R9RVQ5KFH9"
+      };
+
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      // Get a reference to the database service
+      const database = getDatabase(app);
+      const db = getDatabase();
+      const dbRef = ref(getDatabase());
+
+      console.log("HERE!!")
+
+
+      // Get DI_1 Count
+      const smsKillRef = ref(db, '/Telemetry Data/SMS Kill Switch/enable');
+      onValue(smsKillRef, (snapshot) => {
+        var smsKill_data = snapshot.val();
+
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        //document.getElementById("SMS_KillSw").innerHTML = smsKill_data;
+
+        if (smsKill_data == true) {
+          //console.log("Running")
+          document.getElementById("SMS_KillSw").innerHTML = "Active";
+        } else if (smsKill_data == false) {
+          //console.log("Idle")
+          document.getElementById("SMS_KillSw").innerHTML = "Disabled";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("SMS_KillSw").innerHTML = "Data Loss";
+        }
+
+      });
+
+    
+  
+      // Get DI_1 Count
+      const mainsRef = ref(db, '/Telemetry Data/IO/Mains OK');
+      onValue(mainsRef, (snapshot) => {
+        var mains_data = snapshot.val();
+
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("I-1").innerHTML = mains_data;
+
+        //console.log(typeof i_p1_run_data)
+        //console.log(typeof i_p1_run_ref)
+        if (mains_data == true) {
+          //console.log("Running")
+          document.getElementById("I1_status").innerHTML = "OK";
+        } else if (mains_data == false) {
+          //console.log("Idle")
+          document.getElementById("I1_status").innerHTML = "Power Outage";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("I1_status").innerHTML = "Data Loss";
+        }
+
+      });
+
+      // Get DI_1 Count
+      const i_p1TripRef = ref(db, '/Telemetry Data/IO/OL1 Trip');
+      onValue(i_p1TripRef, (snapshot) => {
+        var i_p1_trip_data = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("I-2").innerHTML = i_p1_trip_data;
+
+        if (i_p1_trip_data == false) {
+          //console.log("Running")
+          document.getElementById("I2_status").innerHTML = "Tripped";
+        } else if (i_p1_trip_data == true) {
+          //console.log("Idle")
+          document.getElementById("I2_status").innerHTML = "Healthy";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("I2_status").innerHTML = "Data Loss";
+        }
+      });
+
+
+      // Get DI_1 Count
+      const i_p2RunRef = ref(db, '/Telemetry Data/IO/OL2 Trip');
+      onValue(i_p2RunRef, (snapshot) => {
+        var i_p2_run_data = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("I-3").innerHTML = i_p2_run_data;
+
+        if (i_p2_run_data == false) {
+          //console.log("Running")
+          document.getElementById("I3_status").innerHTML = "Tripped";
+        } else if (i_p2_run_data == true) {
+          //console.log("Idle")
+          document.getElementById("I3_status").innerHTML = "Healthy";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("I3_status").innerHTML = "Data Loss";
+        }
+      });
+
+      // Get DI_1 Count
+      const i_p2TripRef = ref(db, '/Telemetry Data/IO/OL3 Trip');
+      onValue(i_p2TripRef, (snapshot) => {
+        var i_p2_trip_data = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("I-4").innerHTML = i_p2_trip_data;
+
+        if (i_p2_trip_data == false) {
+          //console.log("Running")
+          document.getElementById("I4_status").innerHTML = "Tripped";
+        } else if (i_p2_trip_data == true) {
+          //console.log("Idle")
+          document.getElementById("I4_status").innerHTML = "Healthy";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("I4_status").innerHTML = "Data Loss";
+        }
+      });
+
+      // Get DI_1 Count
+      const pfrRef = ref(db, '/Telemetry Data/IO/MCB1 Trip');
+      onValue(pfrRef, (snapshot) => {
+        var pfrdata = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("I-5").innerHTML = pfrdata;
+
+        if (pfrdata == false) {
+          //console.log("Running")
+          document.getElementById("I5_status").innerHTML = "Tripped";
+        } else if (pfrdata == true) {
+          //console.log("Idle")
+          document.getElementById("I5_status").innerHTML = "Healthy";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("I5_status").innerHTML = "Data Loss";
+        }
+      });
+
+
+      // Get DI_1 Count
+      const p1SWRef = ref(db, '/Telemetry Data/IO/MCB2 Trip');
+      onValue(p1SWRef, (snapshot) => {
+        var p1SWdata = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("I-6").innerHTML = p1SWdata;
+
+        if (p1SWdata == false) {
+          //console.log("Running")
+          document.getElementById("I6_status").innerHTML = "Tripped";
+        } else if (p1SWdata == true) {
+          //console.log("Idle")
+          document.getElementById("I6_status").innerHTML = "Healthy";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("I6_status").innerHTML = "Data Loss";
+        }
+
+      });
+
+      // Get DI_1 Count
+      const p2SWRef = ref(db, '/Telemetry Data/IO/MCB3 Trip');
+      onValue(p2SWRef, (snapshot) => {
+        var p2SWdata = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("I-7").innerHTML = p2SWdata;
+
+        if (p2SWdata == false) {
+          //console.log("Running")
+          document.getElementById("I7_status").innerHTML = "Tripped";
+        } else if (p2SWdata == true) {
+          //console.log("Idle")
+          document.getElementById("I7_status").innerHTML = "Healthy";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("I7_status").innerHTML = "Data Loss";
+        }
+      });
+
+
+      // Get DI_1 Count
+      const floatRef = ref(db, '/Telemetry Data/IO/MCB4 Trip');
+      onValue(floatRef, (snapshot) => {
+        var floatdata = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("I-8").innerHTML = floatdata;
+
+        if (floatdata == false) {
+          //console.log("Running")
+          document.getElementById("I8_status").innerHTML = "Tripped";
+        } else if (floatdata == true) {
+          //console.log("Idle")
+          document.getElementById("I8_status").innerHTML = "Healthy";
+        } else{
+          //console.log("Wrong data type")
+          document.getElementById("I8_status").innerHTML = "Data Loss";
+        }
+      });
+      
+
+      // Get Time
+      const TRef = ref(db, '/Telemetry Data/Time Data/Time Stamp');
+      onValue(TRef, (snapshot) => {
+        var Tdata = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("TimeStamp").innerHTML = Tdata;
+      });
+
+      // Get Time
+      const T2Ref = ref(db, '/Telemetry Data/Time Data/Restart Time Stamp');
+      onValue(T2Ref, (snapshot) => {
+        var T2data = snapshot.val();
+        //console.log(data);
+        console.log(snapshot.val()); 
+        //alert("Here is your value: " + data); 
+        document.getElementById("RestartTimeStamp").innerHTML = T2data;
+      });
+
+
+      function msg() {
+        alert("SMS has been sent to system contact list.\nManual SMS button will only work once every 1 minute.");
+
+      };
+      function msg2() {
+        alert("SMS system status will be toggled.\nSMS on/off button will only work once every 15 seconds.");
+
+      };
+      function msg3() {
+        alert("System data will be updated. Check for change in Last Update TimeStamp value.\nManual data update button will only work once every 1 minute.");
+
+      };
+
+      function toggle(){
+        // store the name var to 1
+        name = 1;
+        // write the "1" value to the database
+        set(ref(db, 'Buttons/Execute'), {
+          value : name
+        });
+        // start a countdown timer of 7 seconds before resetting the run state back to 0
+        setTimeout(() => { name = 0;
+          set(ref(db, 'Buttons/Execute'), {
+          value : name
+        }); }, 1000);
+
+      };
+
+      function toggleSMS(){
+
+        // store the name var to 1
+        name = 1;
+        // write the "1" value to the database
+        set(ref(db, 'Buttons/KillSw'), {
+          value : name
+        });
+        // start a countdown timer of 7 seconds before resetting the run state back to 0
+        setTimeout(() => { name = 0;
+          set(ref(db, 'Buttons/KillSw'), {
+          value : name
+        }); }, 1000);
+          
+
+      }
+
+
+      function dataToggle(){
+
+        // store the name var to 1
+        name = 1;
+        // write the "1" value to the database
+        set(ref(db, 'Buttons/dataToggle'), {
+          value : name
+        });
+        // start a countdown timer of 7 seconds before resetting the run state back to 0
+        setTimeout(() => { name = 0;
+          set(ref(db, 'Buttons/dataToggle'), {
+          value : name
+        }); }, 1000);
+          
+
+      }
+
+      
+
+      function getData(refString){
+        const Ref = ref(db, refString);
+        onValue(Ref, (snapshot) => {
+          var data = snapshot.val();
+          console.log(snapshot.val());
+          return data; 
+        });
+      }
+
+      var timeBtn = document.getElementById('timeBtn');
+      
+      
+      timeBtn.addEventListener('click', function() {
+          msg();
+          toggle();
+          
+      });
+
+      smsKillBtn.addEventListener('click', function() {
+          msg2();
+          toggleSMS();
+      });
+
+      dataBtn.addEventListener('click', function() {
+          msg3();
+          dataToggle();
+      });
+
+    
+    </script>
+
+
+
+
+  </head>
+
+  
+
+  <body class="light" id="top">
+    <header class="header center">
+      
+
+      <nav class="nav center">
+        
+
+        
+
+        <button
+          type="button"
+          aria-label="toggle navigation"
+          class="btn btn--icon nav__hamburger"
+        >
+          <i aria-hidden="true" class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- About -->
+      <div class="about center">
+
+        <h1><span class="about__name">M&E Controls Ltd</span></h1>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        <h2>Time Logging</h2>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        <h3 class="section__title">Log In / Register</h3>
+        
+        
+      </div>
+
+      
+
+
+      <!-- Contact -->
+      <section class="section contact center" id="contact">
+        
+        
+        
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        </p>
+
+        <a
+        href="file:///Users/jonnylogue/Desktop/MandETime/public/Login.html"
+        class="link footer__link"
+        >
+          EMPLOYEE LOG IN
+        </a>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+        <a
+        href="file:///Users/jonnylogue/Desktop/MandETime/public/Register.html"
+        class="link footer__link"
+        >
+          EMPLOYEE REGISTER
+        </a>
+
+
+          
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+          
+          
+
+          
+          
+
+
+        
+        <div class="about__contact center">
+
+          
+        </div>
+      </div>
+
+      </section>
+    </main>
+
+    <footer class="footer">
+      
+      
+    </footer>
+
+    <div class="scroll-container">
+    <div class="scroll-top">
+      <a aria-label="Scroll up" href="#top">
+        <i aria-hidden="true" class="fas fa-arrow-up"></i>
+      </a>
+    </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
